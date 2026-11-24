@@ -14,7 +14,7 @@ const sans = Noto_Sans({
 export const metadata: Metadata = {
   title: "kanadayagidiyoruz | Kanada'da lise ve dil programları için danışmanlık",
   description:
-    "Kanada'da lise, İngilizce ve Fransızca dil programları için okul seçimi, başvuru, karşılama ve ilk ay desteği. İstanbul'da biz, Ottawa'da öğretmen ortağımız.",
+    "Kanada'da lise, İngilizce ve Fransızca dil programları için okul seçimi, başvuru, karşılama ve ilk ay desteği. İstanbul'da biz, Ottawa'da diploma koordinatörümüz.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

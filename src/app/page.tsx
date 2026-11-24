@@ -48,8 +48,8 @@ const SLIDES: Slide[] = [
     content: (
       <HeroSlide
         city="Ottawa"
-        title="Kanada'da lise: yanında bir öğretmen olsun"
-        text="Ortağımız Ottawa'da yaşayan bir İngilizce öğretmeni. Okul seçiminden ilk okul gününe kadar öğrencinin yanında."
+        title="Kanada'da lise: yanında bir koordinatör olsun"
+        text="Ottawa'daki diploma koordinatörümüz, okul seçiminden ilk okul gününe kadar öğrencinin yanında."
       />
     ),
   },
@@ -265,7 +265,7 @@ export default function Home() {
           <Container className="relative grid items-center gap-16 lg:grid-cols-[1.2fr_1fr]">
             <div>
               <SectionHeading invert eyebrow="Farkımız" title="Başvuru bittiğinde işimiz bitmiyor.">
-                Ortağımız Ottawa&apos;da yaşayan bir İngilizce öğretmeni. Öğrenci indiğinde onu karşılayan, okulun ilk
+                Diploma koordinatörümüz Ottawa&apos;da yaşıyor. Öğrenci indiğinde onu karşılayan, okulun ilk
                 gününde yanında olan ve veli aradığında telefonu açan kişi o.
               </SectionHeading>
               <ul className="mt-10 grid gap-x-8 sm:grid-cols-2">
