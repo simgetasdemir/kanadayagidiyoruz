@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# kanadayagidiyoruz
 
-## Getting Started
+Kanada'da lise ve dil programları için yurtdışı eğitim danışmanlığı sitesi.
 
-First, run the development server:
+- Next.js 16 (App Router, React 19), TypeScript
+- Tailwind CSS 4, motion 14 (Aceternity UI bileşenleri bu sürümlerle uyumlu)
+- Aceternity UI desenleri: Resizable Navbar, Spotlight, Grid Background, Card Hover Effect, Timeline (`src/components/ui`)
+- Tek font: Instrument Sans (Türkçe karakter destekli), tüm butonlar `src/components/ui/button.tsx` içinden
 
-```bash
+## Backend (Next.js route handlers)
+
+- `POST /api/chat`: okul asistanı. Kurallı çalışır, konu dışına çıkmaz, vize tavsiyesi vermez (`src/lib/chat.ts`).
+- `POST /api/randevu`: 15 dakikalık görüşme formu. `FORM_WEBHOOK_URL` tanımlıysa başvuruyu oraya JSON olarak iletir
+  (Google Sheets Apps Script, Make, Zapier, Formspree gibi). Tanımlı değilse sunucu loguna yazar.
+
+## Çalıştırma
+
+```
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Yayın için en kolay yol: GitHub'a yükleyip Vercel'e bağlamak. Vercel'de ortam değişkeni olarak `FORM_WEBHOOK_URL` eklenir.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Doldurulması gerekenler
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- İletişim e-postası ve Instagram hesabı (footer, `src/app/page.tsx`)
+- Paket ücretleri (şu an "görüşmeden sonra yazılı" deniyor)
+- KVKK aydınlatma metninin tam hali
