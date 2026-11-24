@@ -1,6 +1,6 @@
 "use client";
 
-// Aceternity UI "Spotlight" bileşeninden uyarlandı; renkler sitenin paletine çekildi.
+// Aceternity UI "Spotlight" bileşeninden uyarlandı; tek renk (brand), çok düşük yoğunluk.
 import { motion } from "motion/react";
 
 export function Spotlight() {
@@ -12,12 +12,7 @@ export function Spotlight() {
       transition={{ duration: 1.2, ease: "easeOut" }}
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      <div className="absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(184,50,42,0.10),transparent)]" />
-      <motion.div
-        animate={{ x: [0, 40, 0] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -top-24 -left-40 h-[460px] w-[620px] -rotate-12 rounded-full bg-[radial-gradient(closest-side,rgba(47,74,63,0.08),transparent)]"
-      />
+      <div className="absolute -top-40 left-[10%] h-[560px] w-[880px] rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--brand)_8%,transparent),transparent)]" />
     </motion.div>
   );
 }

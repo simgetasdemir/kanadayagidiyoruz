@@ -1,19 +1,20 @@
 import { AppointmentForm } from "@/components/appointment-form";
 import { ChatWidget } from "@/components/chat-widget";
+import { CityMap } from "@/components/city-map";
+import { HeroVisual } from "@/components/hero-visual";
+import { ParentNote } from "@/components/parent-note";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 import { BackgroundGrid } from "@/components/ui/background-grid";
 import { ButtonLink } from "@/components/ui/button";
 import { HoverEffect } from "@/components/ui/hover-effect";
-import { ResizableNavbar } from "@/components/ui/resizable-navbar";
+import { Logo, ResizableNavbar } from "@/components/ui/resizable-navbar";
 import { Container, SectionHeading } from "@/components/ui/section";
+import { Separator } from "@/components/ui/separator";
 import { Spotlight } from "@/components/ui/spotlight";
 import { Timeline } from "@/components/ui/timeline";
-import {
-  IconBooks,
-  IconCheck,
-  IconLanguage,
-  IconPlaneArrival,
-  IconSchool,
-} from "@tabler/icons-react";
+import { cn } from "@/lib/utils";
+import { IconCheck, IconMinus, IconPlaneArrival } from "@tabler/icons-react";
 
 const NAV = [
   { name: "Programlar", link: "#programlar" },
@@ -29,161 +30,93 @@ const PROGRAMS = [
   {
     title: "Lise",
     description:
-      "9. sınıftan itibaren Kanada devlet liselerinde bir dönem, bir yıl ya da diploma. Okul kurulunu notlara, bütçeye ve öğrencinin ilgisine göre birlikte seçiyoruz.",
+      "Kanada devlet liselerinde bir dönem, bir yıl ya da diploma. Okul kurulunu notlara, bütçeye ve öğrencinin ilgisine göre birlikte seçiyoruz.",
     meta: "Ottawa ve Toronto bölgesi",
-    icon: <IconSchool size={22} stroke={1.75} />,
+    visual: { big: "9–12", small: "Sınıf" },
   },
   {
     title: "Dil programları",
     description:
-      "4 haftadan 6 aya kadar İngilizce ya da Fransızca. Kısa programlar yaz tatiline, uzun olanlar üniversite öncesi bir yıla uygun.",
+      "İngilizce ya da Fransızca. Kısa programlar yaz tatiline, uzun olanlar üniversite öncesi bir yıla uygun.",
     meta: "Ottawa, Montreal, Quebec City, Toronto",
-    icon: <IconLanguage size={22} stroke={1.75} />,
+    visual: { big: "4–24", small: "Hafta" },
   },
   {
     title: "Sınavlar ve yüksek lisans",
     description:
-      "IELTS ya da Duolingo için hangi seviyeden başlamanız gerektiğini konuşuyoruz, doğru kaynağa yönlendiriyoruz. Yüksek lisans başvurusunda okul listesi ve yazılarda yanınızdayız.",
+      "IELTS ya da Duolingo için hangi seviyeden başlamanız gerektiğini konuşuyor, doğru kaynağa yönlendiriyoruz. Yüksek lisans başvurusunda okul listesi ve yazılarda yanınızdayız.",
     meta: "Seviye görüşmesi ortağımızla, online",
-    icon: <IconBooks size={22} stroke={1.75} />,
+    visual: { big: "IELTS", small: "Sınav · başvuru" },
   },
 ];
 
 const WITH_YOU = [
-  "Havalimanında karşılama ve eve ya da homestay ailesine bırakma",
-  "İlk hafta telefon hattı, banka hesabı ve toplu taşıma kartı",
+  "Havalimanında karşılama ve homestay ailesine bırakma",
+  "İlk hafta telefon hattı, banka hesabı ve ulaşım kartı",
   "Okul kaydı günü öğrenciyle birlikte okulda olmak",
   "Homestay ailesini dönem içinde ziyaret etmek",
-  "Ayda bir veliye kısa yazılı durum notu",
-  "Acil bir durumda aynı şehirde ulaşılabilir bir yetişkin",
+  "Ayda bir veliye kısa yazılı not",
+  "Acil bir durumda aynı şehirde bir yetişkin",
 ];
 
 const STEPS = [
   {
-    step: "1",
+    step: "01",
     title: "Tanışma görüşmesi",
-    content: (
-      <p>
-        15 dakikalık ücretsiz bir görüşme. Öğrencinin yaşını, notlarını, bütçenizi ve ne zaman gitmek istediğinizi
-        dinliyoruz. Bu aşamada hiçbir ödeme yok.
-      </p>
-    ),
+    content: "15 dakikalık ücretsiz bir görüşme. Öğrencinin yaşını, notlarını, bütçenizi ve ne zaman gitmek istediğinizi dinliyoruz. Bu aşamada hiçbir ödeme yok.",
   },
   {
-    step: "2",
+    step: "02",
     title: "Okul önerisi",
-    content: (
-      <p>
-        Bir hafta içinde size üç okul ve şehir önerisi gönderiyoruz: yıllık ücret, konaklama seçenekleri ve neden bu
-        okulu önerdiğimiz tek sayfada.
-      </p>
-    ),
+    content: "Size üç okul ve şehir önerisi gönderiyoruz: yıllık ücret, konaklama seçenekleri ve neden bu okulu önerdiğimiz tek sayfada.",
   },
   {
-    step: "3",
+    step: "03",
     title: "Başvuru ve kayıt",
-    content: (
-      <p>
-        Başvuru formlarını, okulun istediği belgeleri ve gerekiyorsa niyet mektubunu birlikte hazırlıyoruz. Kabul
-        mektubu gelene kadar okulla yazışmaları biz takip ediyoruz.
-      </p>
-    ),
+    content: "Başvuru formlarını, okulun istediği belgeleri ve gerekiyorsa niyet mektubunu birlikte hazırlıyoruz. Kabul mektubu gelene kadar okulla yazışmaları biz takip ediyoruz.",
   },
   {
-    step: "4",
+    step: "04",
     title: "Vize aşaması",
-    content: (
-      <p>
-        Vize ve öğrenci izni konusunda danışmanlık vermiyoruz. Bu işi Kanada&apos;da yalnızca lisanslı danışmanlar
-        (RCIC) yapabiliyor; sizi anlaşmalı bir lisanslı danışmana yönlendiriyoruz.
-      </p>
-    ),
+    content: "Vize ve öğrenci izni konusunda danışmanlık vermiyoruz. Bu işi Kanada'da yalnızca lisanslı danışmanlar (RCIC) yapabiliyor; sizi anlaşmalı bir lisanslı danışmana yönlendiriyoruz.",
   },
   {
-    step: "5",
+    step: "05",
     title: "Varış ve ilk ay",
-    content: (
-      <p>
-        Ottawa&apos;daki ortağımız öğrenciyi havalimanında karşılıyor, ilk haftanın işlerini birlikte hallediyor ve
-        okulun ilk gününde yanında oluyor.
-      </p>
-    ),
+    content: "Ottawa'daki ortağımız öğrenciyi havalimanında karşılıyor, ilk haftanın işlerini birlikte hallediyor ve okulun ilk gününde yanında oluyor.",
   },
   {
-    step: "6",
+    step: "06",
     title: "Dönem boyunca",
-    content: (
-      <p>
-        Lise öğrencileri için yıl boyu takip: aylık veli notu, okul görüşmelerine katılım ve homestay ziyaretleri.
-      </p>
-    ),
+    content: "Lise öğrencileri için yıl boyu takip: aylık veli notu, okul görüşmelerine katılım ve homestay ziyaretleri.",
   },
 ];
 
 const CITIES = [
-  {
-    name: "Ottawa",
-    lang: "İngilizce ve Fransızca",
-    note: "Ortağımız burada yaşıyor. Lise ve dil programları için ilk önerimiz.",
-    distance: "Ortağımızın şehri",
-  },
-  {
-    name: "Montreal",
-    lang: "Fransızca ve İngilizce",
-    note: "İki dili aynı anda duyabileceğiniz şehir. Kısa dil programları için uygun.",
-    distance: "Ottawa'ya 2 saat",
-  },
-  {
-    name: "Quebec City",
-    lang: "Fransızca",
-    note: "Gündelik hayat tamamen Fransızca. Dili hızlı ilerletmek isteyenler için.",
-    distance: "Ottawa'ya 4,5 saat",
-  },
-  {
-    name: "Toronto",
-    lang: "İngilizce",
-    note: "En geniş okul seçeneği. Lise ve uzun dil programları için.",
-    distance: "Ottawa'ya 4–5 saat",
-  },
+  { name: "Ottawa", lang: "EN · FR", note: "Ortağımız burada yaşıyor. Lise ve dil programları için ilk önerimiz." },
+  { name: "Montreal", lang: "FR · EN", note: "İki dili aynı anda duyabileceğiniz şehir. Kısa dil programları için uygun." },
+  { name: "Quebec City", lang: "FR", note: "Gündelik hayat tamamen Fransızca. Dili hızlı ilerletmek isteyenler için." },
+  { name: "Toronto", lang: "EN", note: "En geniş okul seçeneği. Lise ve uzun dil programları için." },
 ];
 
 const PACKAGES = [
-  {
-    name: "Başvuru",
-    who: "Dil programı ve yüksek lisans için",
-    items: [
-      "Üç okul ve şehir önerisi",
-      "Başvuru formu ve belge kontrolü",
-      "Niyet mektubu ve özgeçmiş desteği",
-      "Konaklama seçeneklerinin karşılaştırması",
-      "Lisanslı vize danışmanına yönlendirme",
-    ],
-    featured: false,
-  },
-  {
-    name: "Başvuru ve karşılama",
-    who: "İlk kez yurtdışına gidenler için",
-    items: [
-      "Başvuru paketindeki her şey",
-      "Havalimanında karşılama",
-      "İlk hafta: telefon, banka, ulaşım kartı",
-      "Okulun ilk gününde yanında olmak",
-      "İlk ay boyunca ulaşılabilir bir yetişkin",
-    ],
-    featured: true,
-  },
-  {
-    name: "Lise ve yıllık takip",
-    who: "18 yaşından küçük lise öğrencileri için",
-    items: [
-      "Başvuru ve karşılamadaki her şey",
-      "Vasilik (custodian) düzenlemesi",
-      "Ayda bir veliye yazılı durum notu",
-      "Okul görüşmelerine katılım",
-      "Dönem içinde homestay ziyareti",
-    ],
-    featured: false,
-  },
+  { name: "Başvuru", who: "Dil programı ve yüksek lisans" },
+  { name: "Başvuru ve karşılama", who: "İlk kez yurtdışına gidenler", featured: true },
+  { name: "Lise ve yıllık takip", who: "18 yaş altı lise öğrencileri" },
+];
+
+// [özellik, hangi paketlerde var]
+const FEATURES: [string, [boolean, boolean, boolean]][] = [
+  ["Üç okul ve şehir önerisi", [true, true, true]],
+  ["Başvuru formu ve belge kontrolü", [true, true, true]],
+  ["Niyet mektubu ve özgeçmiş desteği", [true, true, true]],
+  ["Lisanslı vize danışmanına yönlendirme", [true, true, true]],
+  ["Havalimanında karşılama", [false, true, true]],
+  ["İlk hafta: telefon, banka, ulaşım kartı", [false, true, true]],
+  ["Okulun ilk gününde yanında olmak", [false, true, true]],
+  ["Vasilik (custodian) düzenlemesi", [false, false, true]],
+  ["Ayda bir yazılı veli notu", [false, false, true]],
+  ["Okul görüşmeleri ve homestay ziyareti", [false, false, true]],
 ];
 
 const FAQ = [
@@ -205,9 +138,23 @@ const FAQ = [
   },
   {
     q: "Neden sadece dört şehir?",
-    a: "Çünkü ortağımızın gidip görebildiği, okullarını ve ailelerini tanıdığı şehirlerle çalışıyoruz. Toronto'dan uzak bir şehir isterseniz bunu görüşmede açıkça söyleriz.",
+    a: "Çünkü ortağımızın gidip görebildiği, okullarını ve ailelerini tanıdığı şehirlerle çalışıyoruz. Başka bir şehir isterseniz bunu görüşmede açıkça söyleriz.",
   },
 ];
+
+function Mark({ on, featured }: { on: boolean; featured?: boolean }) {
+  return on ? (
+    <span className={cn("inline-grid size-6 place-items-center rounded-full", featured ? "bg-brand text-paper" : "bg-ink text-paper")}>
+      <IconCheck size={14} stroke={3} />
+      <span className="sr-only">Var</span>
+    </span>
+  ) : (
+    <span className="inline-grid size-6 place-items-center text-muted">
+      <IconMinus size={16} stroke={2} />
+      <span className="sr-only">Yok</span>
+    </span>
+  );
+}
 
 export default function Home() {
   return (
@@ -215,173 +162,209 @@ export default function Home() {
       <ResizableNavbar items={NAV} cta={CTA} />
 
       <main id="top" className="flex-1">
-        {/* Hero */}
-        <section className="relative overflow-hidden pb-20 pt-36 sm:pb-28 sm:pt-44">
+        {/* Giriş: sola yaslı dev başlık, altta metin + görsel */}
+        <section className="relative overflow-hidden pb-20 pt-32 sm:pb-32 sm:pt-40">
           <BackgroundGrid />
           <Spotlight />
           <Container className="relative">
-            <p className="inline-flex h-8 items-center rounded-full border border-line bg-white px-3.5 text-[13px] font-medium text-ink-2">
-              İstanbul ve Ottawa
-            </p>
-            <h1 className="mt-6 max-w-3xl text-[40px] font-semibold leading-[1.08] sm:text-[60px]">
-              Kanada&apos;ya giden öğrencinin yanında bir öğretmen olsun.
+            <Badge>İstanbul ↔ Ottawa</Badge>
+            <h1 className="mt-8 t-display">
+              <span className="block font-extralight">Kanada&apos;da</span>
+              <span className="block">
+                yanında bir <span className="text-brand">öğretmen.</span>
+              </span>
             </h1>
-            <p className="mt-6 max-w-2xl text-[18px] leading-relaxed text-ink-2">
-              Lise, İngilizce ve Fransızca dil programları için okul seçiminden ilk haftaya kadar yanınızdayız.
-              İstanbul&apos;da biz, Ottawa&apos;da İngilizce öğretmeni ortağımız.
-            </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="#gorusme">15 dakikalık ücretsiz görüşme</ButtonLink>
-              <ButtonLink href="#paketler" variant="secondary">
-                Paketleri incele
-              </ButtonLink>
-            </div>
-            <ul className="mt-14 grid max-w-3xl gap-4 border-t border-line pt-8 sm:grid-cols-3">
-              {[
-                "Okul ücretleri okulun resmi fiyatıyla",
-                "Havalimanında karşılama ve ilk hafta",
-                "Vize için lisanslı danışmana yönlendirme",
-              ].map((t) => (
-                <li key={t} className="flex items-start gap-2.5 text-[15px] text-ink-2">
-                  <IconCheck size={18} stroke={2} className="mt-0.5 shrink-0 text-maple" />
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </section>
-
-        {/* Programlar */}
-        <section id="programlar" className="py-20 sm:py-28">
-          <Container>
-            <SectionHeading eyebrow="Programlar" title="Hangi yaşta, hangi programla gidilir?">
-              Üç alanda çalışıyoruz. Hepsinde okulu siz seçiyorsunuz; biz seçenekleri ve aralarındaki farkı açıkça
-              anlatıyoruz.
-            </SectionHeading>
-            <HoverEffect items={PROGRAMS} className="-mx-2 mt-12" />
-          </Container>
-        </section>
-
-        {/* Yanınızda */}
-        <section id="yaninizda" className="bg-pine py-20 text-white sm:py-28">
-          <Container className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-white/60">Farkımız</p>
-              <h2 className="mt-3 text-3xl font-semibold leading-[1.15] text-white sm:text-[40px]">
-                Başvuru bittiğinde işimiz bitmiyor.
-              </h2>
-              <p className="mt-4 text-[17px] leading-relaxed text-white/75">
-                Ortağımız Ottawa&apos;da yaşayan bir İngilizce öğretmeni. Öğrenci indiğinde onu karşılayan, okulun ilk
-                gününde yanında olan ve velinin aradığında telefonu açan kişi o. Uzaktan bir ofis değil, aynı şehirde
-                bir yetişkin.
-              </p>
-              <div className="mt-8 flex items-center gap-4">
-                <IconPlaneArrival size={28} stroke={1.5} className="text-white/70" />
-                <p className="text-[15px] text-white/75">Ottawa dışındaki şehirlerde karşılama ve ziyaretler planlı yapılır.</p>
+            <div className="mt-16 grid items-start gap-16 lg:grid-cols-[1fr_480px]">
+              <div className="max-w-xl">
+                <p className="t-lead text-muted">
+                  Lise, İngilizce ve Fransızca dil programları için okul seçiminden ilk haftaya kadar yanınızdayız.
+                  İstanbul&apos;da biz, Ottawa&apos;da İngilizce öğretmeni ortağımız.
+                </p>
+                <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                  <ButtonLink href="#gorusme">15 dakikalık ücretsiz görüşme</ButtonLink>
+                  <ButtonLink href="#paketler" variant="secondary">
+                    Paketleri incele
+                  </ButtonLink>
+                </div>
+                <dl className="mt-16 grid grid-cols-1 border-t border-line sm:grid-cols-3">
+                  {[
+                    ["Okul ücreti", "Resmi fiyatıyla"],
+                    ["Varışta", "Karşılama"],
+                    ["Vize", "Lisanslı danışman"],
+                  ].map(([k, v]) => (
+                    <div key={k} className="border-b border-line py-4 sm:border-b-0 sm:border-r sm:px-4 sm:first:pl-0 sm:last:border-r-0">
+                      <dt className="t-label text-muted">{k}</dt>
+                      <dd className="mt-1 t-body font-extrabold text-ink">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
+              <HeroVisual />
             </div>
-            <ul className="grid gap-3 self-center">
-              {WITH_YOU.map((t) => (
-                <li key={t} className="flex items-start gap-3 rounded-2xl border border-white/12 bg-white/[0.04] px-5 py-4 text-[16px] text-white/90">
-                  <IconCheck size={18} stroke={2} className="mt-0.5 shrink-0 text-white/60" />
-                  {t}
-                </li>
-              ))}
-            </ul>
+          </Container>
+        </section>
+
+        {/* Programlar: alt alta satırlar */}
+        <section id="programlar" className="border-t border-line py-20 sm:py-32">
+          <Container className="grid gap-12 lg:grid-cols-[320px_1fr] lg:gap-16">
+            <SectionHeading eyebrow="Programlar" title="Hangi yaşta, hangi programla?">
+              Okulu siz seçiyorsunuz; biz seçenekleri ve aralarındaki farkı açıkça anlatıyoruz.
+            </SectionHeading>
+            <HoverEffect items={PROGRAMS} />
+          </Container>
+        </section>
+
+        {/* Yanınızda: tek vurgu rengi */}
+        <section id="yaninizda" className="relative overflow-hidden bg-accent py-20 sm:py-32">
+          <svg aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 size-[512px] text-paper opacity-10" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="98" fill="none" stroke="currentColor" />
+            <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" />
+            <circle cx="100" cy="100" r="42" fill="none" stroke="currentColor" />
+          </svg>
+          <Container className="relative grid items-center gap-16 lg:grid-cols-[1.2fr_1fr]">
+            <div>
+              <SectionHeading invert eyebrow="Farkımız" title="Başvuru bittiğinde işimiz bitmiyor.">
+                Ortağımız Ottawa&apos;da yaşayan bir İngilizce öğretmeni. Öğrenci indiğinde onu karşılayan, okulun ilk
+                gününde yanında olan ve veli aradığında telefonu açan kişi o.
+              </SectionHeading>
+              <ul className="mt-10 grid gap-x-8 sm:grid-cols-2">
+                {WITH_YOU.map((t) => (
+                  <li key={t} className="flex items-start gap-4 border-t border-paper/20 py-4 t-body text-paper">
+                    <IconCheck size={20} stroke={2} className="mt-1 shrink-0 text-paper/60" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 flex items-center gap-4 t-body text-paper/70">
+                <IconPlaneArrival size={24} stroke={1.5} />
+                Ottawa dışındaki şehirlerde karşılama ve ziyaretler önceden planlanır.
+              </p>
+            </div>
+            <ParentNote />
           </Container>
         </section>
 
         {/* Süreç */}
-        <section id="surec" className="py-20 sm:py-28">
+        <section id="surec" className="py-20 sm:py-32">
           <Container>
             <SectionHeading eyebrow="Süreç" title="İlk görüşmeden ilk okul gününe">
-              Ne zaman ne olacağını baştan bilin. Başvuru süresi okula ve programa göre değişiyor; ilk görüşmede size
-              takvimi çıkarıyoruz.
+              Başvuru süresi okula ve programa göre değişiyor; ilk görüşmede size takvimi çıkarıyoruz.
             </SectionHeading>
-            <div className="mt-14">
+            <div className="mt-16">
               <Timeline data={STEPS} />
             </div>
           </Container>
         </section>
 
-        {/* Şehirler */}
-        <section id="sehirler" className="border-y border-line bg-paper-2 py-20 sm:py-28">
+        {/* Şehirler: harita + liste */}
+        <section id="sehirler" className="border-y border-line bg-surface py-20 sm:py-32">
           <Container>
             <SectionHeading eyebrow="Şehirler" title="Ottawa'dan başlayan dört şehir">
               Sadece ortağımızın gidip görebildiği şehirlerle çalışıyoruz.
             </SectionHeading>
-            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {CITIES.map((c) => (
-                <article key={c.name} className="flex flex-col rounded-3xl border border-line bg-white p-6">
-                  <p className="text-[13px] font-medium text-ink-3">{c.distance}</p>
-                  <h3 className="mt-2 text-2xl font-semibold">{c.name}</h3>
-                  <p className="mt-1 text-[14px] font-medium text-maple">{c.lang}</p>
-                  <p className="mt-4 text-[15px] leading-relaxed text-ink-2">{c.note}</p>
-                </article>
-              ))}
+            <div className="mt-12 grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+              <div className="rounded-lg border border-line bg-paper p-4 sm:p-6">
+                <CityMap />
+              </div>
+              <ul className="border-t border-line">
+                {CITIES.map((c) => (
+                  <li key={c.name} className="border-b border-line py-4">
+                    <div className="flex items-baseline justify-between gap-4">
+                      <h3 className="t-lead font-extrabold">{c.name}</h3>
+                      <span className="t-label text-brand">{c.lang}</span>
+                    </div>
+                    <p className="mt-1 t-body text-muted">{c.note}</p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </Container>
         </section>
 
-        {/* Paketler */}
-        <section id="paketler" className="py-20 sm:py-28">
+        {/* Paketler: karşılaştırma tablosu */}
+        <section id="paketler" className="py-20 sm:py-32">
           <Container>
             <SectionHeading eyebrow="Paketler" title="İhtiyacınız kadar destek">
               Ücretler görüşmeden sonra yazılı olarak verilir. Okul ücretlerine ekleme yapmıyoruz.
             </SectionHeading>
-            <div className="mt-12 grid gap-4 lg:grid-cols-3">
-              {PACKAGES.map((p) => (
-                <article
-                  key={p.name}
-                  className={
-                    p.featured
-                      ? "flex flex-col rounded-3xl border border-maple bg-white p-7 shadow-[0_20px_50px_-30px_rgba(184,50,42,0.45)]"
-                      : "flex flex-col rounded-3xl border border-line bg-white p-7"
-                  }
-                >
-                  <div className="flex h-7 items-center">
-                    {p.featured ? (
-                      <span className="inline-flex h-7 items-center rounded-full bg-maple-soft px-3 text-[13px] font-semibold text-maple">
-                        Önerdiğimiz
-                      </span>
-                    ) : null}
-                  </div>
-                  <h3 className="mt-4 text-2xl font-semibold">{p.name}</h3>
-                  <p className="mt-1 text-[15px] text-ink-2">{p.who}</p>
-                  <ul className="mt-6 grid gap-3 border-t border-line pt-6">
-                    {p.items.map((i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-[15px] text-ink">
-                        <IconCheck size={18} stroke={2} className="mt-0.5 shrink-0 text-maple" />
-                        {i}
+
+            {/* Masaüstü: tablo */}
+            <div className="mt-12 hidden md:block">
+              <table className="w-full table-fixed border-collapse text-left">
+                <thead>
+                  <tr className="align-bottom">
+                    <th className="w-[34%] pb-6" />
+                    {PACKAGES.map((p) => (
+                      <th key={p.name} className={cn("px-6 pb-6 pt-6 align-bottom", p.featured && "rounded-t-lg bg-brand-tint")}>
+                        {p.featured ? <p className="mb-2 t-label text-brand">Önerimiz</p> : null}
+                        <p className="t-lead font-extrabold text-ink">{p.name}</p>
+                        <p className="mt-1 t-body font-normal text-muted">{p.who}</p>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {FEATURES.map(([f, has]) => (
+                    <tr key={f} className="border-t border-line">
+                      <th scope="row" className="py-4 pr-6 t-body font-normal text-ink">
+                        {f}
+                      </th>
+                      {has.map((on, i) => (
+                        <td key={i} className={cn("px-6 py-4", PACKAGES[i].featured && "bg-brand-tint")}>
+                          <Mark on={on} featured={PACKAGES[i].featured} />
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                  <tr className="border-t border-line">
+                    <td />
+                    {PACKAGES.map((p) => (
+                      <td key={p.name} className={cn("px-6 pb-6 pt-6", p.featured && "rounded-b-lg bg-brand-tint")}>
+                        <ButtonLink href="#gorusme" size="sm" variant={p.featured ? "primary" : "secondary"} className="w-full">
+                          Konuşalım
+                        </ButtonLink>
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobil: paket başına liste */}
+            <div className="mt-12 grid gap-12 md:hidden">
+              {PACKAGES.map((p, i) => (
+                <div key={p.name} className="border-t-2 border-ink pt-6">
+                  {p.featured ? <p className="mb-2 t-label text-brand">Önerimiz</p> : null}
+                  <h3 className="t-lead font-extrabold">{p.name}</h3>
+                  <p className="t-body text-muted">{p.who}</p>
+                  <ul className="mt-4 grid gap-2">
+                    {FEATURES.filter(([, has]) => has[i]).map(([f]) => (
+                      <li key={f} className="flex items-start gap-4 t-body">
+                        <Mark on featured={p.featured} />
+                        {f}
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-auto pt-8">
-                    <ButtonLink href="#gorusme" variant={p.featured ? "primary" : "secondary"} className="w-full">
-                      Bu paketi konuşalım
-                    </ButtonLink>
-                  </div>
-                </article>
+                  <ButtonLink href="#gorusme" variant={p.featured ? "primary" : "secondary"} className="mt-6 w-full">
+                    Bu paketi konuşalım
+                  </ButtonLink>
+                </div>
               ))}
             </div>
           </Container>
         </section>
 
         {/* Görüşme */}
-        <section id="gorusme" className="border-t border-line bg-paper-2 py-20 sm:py-28">
+        <section id="gorusme" className="border-t border-line bg-surface py-20 sm:py-32">
           <Container className="grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
             <div>
               <SectionHeading eyebrow="Ücretsiz görüşme" title="15 dakikada neyin mümkün olduğunu konuşalım">
                 Formu doldurun, bir iş günü içinde size uygun saati yazalım. Görüşme telefonla ya da görüntülü yapılır.
               </SectionHeading>
-              <ul className="mt-8 grid gap-3 text-[15px] text-ink-2">
-                {[
-                  "Öğrenciye uygun program ve şehir",
-                  "Yaklaşık yıllık bütçe",
-                  "Başvuru için gereken süre",
-                ].map((t) => (
-                  <li key={t} className="flex items-start gap-2.5">
-                    <IconCheck size={18} stroke={2} className="mt-0.5 shrink-0 text-maple" />
+              <ul className="mt-8 border-t border-line">
+                {["Öğrenciye uygun program ve şehir", "Yaklaşık yıllık bütçe", "Başvuru için gereken süre"].map((t) => (
+                  <li key={t} className="flex items-center gap-4 border-b border-line py-4 t-body text-ink">
+                    <IconCheck size={20} stroke={2} className="shrink-0 text-brand" />
                     {t}
                   </li>
                 ))}
@@ -392,55 +375,51 @@ export default function Home() {
         </section>
 
         {/* SSS */}
-        <section id="sss" className="py-20 sm:py-28">
-          <Container className="grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+        <section id="sss" className="py-20 sm:py-32">
+          <Container className="grid gap-12 lg:grid-cols-[320px_1fr] lg:gap-16">
             <SectionHeading eyebrow="SSS" title="Sık sorulan sorular" />
-            <div className="divide-y divide-line border-y border-line">
-              {FAQ.map((f) => (
-                <details key={f.q} className="group py-5">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-[17px] font-semibold text-ink [&::-webkit-details-marker]:hidden">
-                    {f.q}
-                    <span className="grid size-8 shrink-0 place-items-center rounded-full border border-ink/15 text-ink-2 transition-transform group-open:rotate-45">
-                      +
-                    </span>
-                  </summary>
-                  <p className="mt-3 pr-12 text-[16px] leading-relaxed text-ink-2">{f.a}</p>
-                </details>
+            <Accordion type="single" collapsible className="border-t border-line">
+              {FAQ.map((f, i) => (
+                <AccordionItem key={f.q} value={`q${i}`}>
+                  <AccordionTrigger>{f.q}</AccordionTrigger>
+                  <AccordionContent>{f.a}</AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           </Container>
         </section>
       </main>
 
-      <footer className="border-t border-line bg-white">
-        <Container className="grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+      <footer className="bg-ink text-paper">
+        <Container className="grid gap-10 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <p className="text-[17px] font-semibold text-ink">kanadayagidiyoruz</p>
-            <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-ink-2">
+            <div className="[&_span]:text-paper [&_circle:last-child]:stroke-paper">
+              <Logo />
+            </div>
+            <p className="mt-4 max-w-sm t-body text-paper/70">
               Kanada&apos;da lise ve dil programları için yurtdışı eğitim danışmanlığı. İstanbul ve Ottawa.
             </p>
           </div>
           <div>
-            <p className="text-[14px] font-semibold text-ink">İletişim</p>
-            <ul className="mt-3 grid gap-2 text-[15px] text-ink-2">
+            <p className="t-label text-paper/60">İletişim</p>
+            <ul className="mt-4 grid gap-2 t-body text-paper">
               <li>merhaba@kanadayagidiyoruz.com</li>
               <li>Instagram: @kanadayagidiyoruz</li>
             </ul>
           </div>
           <div id="kvkk">
-            <p className="text-[14px] font-semibold text-ink">Kişisel veriler</p>
-            <p className="mt-3 text-[14px] leading-relaxed text-ink-2">
+            <p className="t-label text-paper/60">Kişisel veriler</p>
+            <p className="mt-4 t-body text-paper/70">
               Formdaki bilgileriniz yalnızca görüşmeyi ayarlamak için kullanılır, üçüncü kişilerle paylaşılmaz ve
               talebiniz üzerine silinir.
             </p>
           </div>
         </Container>
-        <div className="border-t border-line">
-          <Container className="flex flex-col gap-2 py-6 text-[13px] text-ink-3 sm:flex-row sm:justify-between">
-            <p>© 2026 kanadayagidiyoruz</p>
-            <p>Göçmenlik ve vize danışmanlığı vermiyoruz; bu konuda lisanslı danışmanlara (RCIC) yönlendiriyoruz.</p>
-          </Container>
-        </div>
+        <Separator className="bg-paper/15" />
+        <Container className="flex flex-col gap-2 py-6 t-label normal-case tracking-normal text-paper/60 sm:flex-row sm:justify-between">
+          <p>© 2026 kanadayagidiyoruz</p>
+          <p>Göçmenlik ve vize danışmanlığı vermiyoruz; bu konuda lisanslı danışmanlara (RCIC) yönlendiriyoruz.</p>
+        </Container>
       </footer>
 
       <ChatWidget />

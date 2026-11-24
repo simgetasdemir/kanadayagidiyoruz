@@ -1,46 +1,77 @@
 "use client";
 
-// Aceternity UI "Card Hover Effect" deseninden uyarlandı:
-// imlecin üzerinde olduğu kartın arkasına kayan yumuşak bir zemin.
+// Aceternity UI "Card Hover Effect" deseninden uyarlandı.
+// DESIGN.md: yan yana üç kart yasak, bu yüzden öğeler alt alta satır olarak dizilir;
+// imlecin üzerindeki satırın arkasına yumuşak bir zemin kayar.
 import { cn } from "@/lib/utils";
+import { IconArrowRight } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState, type ReactNode } from "react";
 
-export type HoverItem = { title: string; description: string; meta?: string; icon?: ReactNode };
+export type HoverItem = {
+  title: string;
+  description: string;
+  meta?: string;
+  icon?: ReactNode;
+  visual?: { big: string; small: string };
+  href?: string;
+};
 
 export function HoverEffect({ items, className }: { items: HoverItem[]; className?: string }) {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <div className={cn("grid grid-cols-1 md:grid-cols-3", className)}>
+    <ul className={cn("border-t border-line", className)}>
       {items.map((item, idx) => (
-        <div
+        <li
           key={item.title}
-          className="relative block h-full p-2"
+          className="relative border-b border-line"
           onMouseEnter={() => setHovered(idx)}
           onMouseLeave={() => setHovered(null)}
         >
           <AnimatePresence>
             {hovered === idx ? (
               <motion.span
-                layoutId="hover-bg"
-                className="absolute inset-0 block rounded-[28px] bg-maple-soft"
+                layoutId="hover-row"
+                className="absolute inset-x-0 inset-y-2 block rounded-lg bg-surface md:-inset-x-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { duration: 0.15 } }}
                 exit={{ opacity: 0, transition: { duration: 0.15, delay: 0.1 } }}
               />
             ) : null}
           </AnimatePresence>
-          <div className="relative z-10 flex h-full flex-col rounded-3xl border border-line bg-white p-7">
-            {item.icon ? (
-              <span className="grid size-11 place-items-center rounded-2xl bg-paper-2 text-maple">{item.icon}</span>
+          <a
+            href={item.href ?? "#gorusme"}
+            className="relative z-10 grid gap-4 py-10 md:grid-cols-[192px_1fr] md:items-start md:gap-8"
+          >
+            {item.visual ? (
+              <div>
+                <p className="font-display text-[48px] font-extralight leading-[56px] tracking-[-0.03em] text-ink">
+                  {item.visual.big}
+                </p>
+                <p className="mt-2 t-label text-muted">{item.visual.small}</p>
+              </div>
             ) : null}
-            <h3 className="mt-6 text-xl font-semibold">{item.title}</h3>
-            <p className="mt-3 text-[15px] leading-relaxed text-ink-2">{item.description}</p>
-            {item.meta ? <p className="mt-auto pt-6 text-[14px] font-medium text-ink-3">{item.meta}</p> : null}
-          </div>
-        </div>
+            <div className="max-w-xl">
+              <h3 className="flex items-center gap-2 t-lead font-extrabold">
+                {item.icon ? <span className="text-brand">{item.icon}</span> : null}
+                {item.title}
+              </h3>
+              <p className="mt-2 t-body text-muted">{item.description}</p>
+              {item.meta ? (
+                <p className="mt-4 flex items-center gap-2 t-body font-extrabold text-ink">
+                  {item.meta}
+                  <IconArrowRight
+                    size={20}
+                    stroke={2}
+                    className={cn("shrink-0 transition-transform", hovered === idx ? "translate-x-1 text-brand" : "text-muted")}
+                  />
+                </p>
+              ) : null}
+            </div>
+          </a>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

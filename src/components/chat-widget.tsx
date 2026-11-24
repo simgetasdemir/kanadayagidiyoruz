@@ -72,43 +72,43 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-4 z-50 flex h-[min(560px,calc(100dvh-140px))] w-[min(380px,calc(100vw-32px))] flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-[0_24px_60px_-20px_rgba(29,27,25,0.35)] sm:right-6"
+            className="fixed bottom-24 right-4 z-50 flex h-[min(560px,calc(100dvh-144px))] w-[min(384px,calc(100vw-32px))] flex-col overflow-hidden rounded-lg border border-line bg-paper shadow-float sm:right-6"
           >
-            <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-5">
+            <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-6">
               <div>
-                <p className="text-[15px] font-semibold text-ink">Okul asistanı</p>
-                <p className="text-[13px] text-ink-3">Okul seçimi ve görüşme için</p>
+                <p className="t-body font-extrabold text-ink">Okul asistanı</p>
+                <p className="t-label normal-case tracking-normal text-muted">Okul seçimi ve görüşme</p>
               </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="grid size-9 place-items-center rounded-full text-ink-2 hover:bg-paper-2"
+                className="grid size-10 place-items-center rounded-full border border-transparent text-ink hover:bg-surface"
                 aria-label="Kapat"
               >
                 <IconX size={18} stroke={1.75} />
               </button>
             </div>
 
-            <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+            <div ref={listRef} className="flex-1 space-y-4 overflow-y-auto p-4">
               {msgs.map((m, i) => (
                 <div
                   key={i}
                   className={cn(
-                    "max-w-[85%] rounded-2xl px-4 py-2.5 text-[14px] leading-relaxed",
-                    m.from === "bot" ? "bg-paper-2 text-ink" : "ml-auto bg-ink text-white",
+                    "max-w-[85%] rounded-md px-4 py-2 t-body",
+                    m.from === "bot" ? "bg-surface text-ink" : "ml-auto bg-ink text-paper",
                   )}
                 >
                   {m.text}
                 </div>
               ))}
               {options.length ? (
-                <div className="flex flex-wrap gap-2 pt-1">
+                <div className="flex flex-wrap gap-2">
                   {options.map((o) => (
                     <button
                       key={o.action}
                       type="button"
                       onClick={() => send({ action: o.action }, o.label)}
-                      className="h-9 rounded-full border border-ink/15 bg-white px-4 text-[13px] font-semibold text-ink hover:border-maple hover:text-maple"
+                      className="h-10 rounded-full border border-line bg-paper px-4 t-body font-extrabold text-ink hover:border-brand hover:text-brand"
                     >
                       {o.label}
                     </button>
@@ -127,24 +127,24 @@ export function ChatWidget() {
               }}
               className="shrink-0 border-t border-line p-3"
             >
-              <div className="flex h-11 items-center gap-2 rounded-full border border-ink/15 bg-paper pl-4 pr-1 focus-within:border-maple">
+              <div className="flex h-12 items-center gap-2 rounded-full border border-line bg-paper pl-4 pr-1 focus-within:border-brand">
                 <input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   maxLength={300}
                   placeholder="Sorunuzu yazın"
-                  className="h-full min-w-0 flex-1 bg-transparent text-[14px] text-ink outline-none placeholder:text-ink-3"
+                  className="h-full min-w-0 flex-1 bg-transparent t-body text-ink outline-none placeholder:text-muted"
                 />
                 <button
                   type="submit"
                   disabled={busy || !input.trim()}
-                  className="grid size-9 shrink-0 place-items-center rounded-full border border-maple bg-maple text-white disabled:opacity-40"
+                  className="grid size-10 shrink-0 place-items-center rounded-full border border-brand bg-brand text-paper disabled:opacity-40"
                   aria-label="Gönder"
                 >
                   <IconArrowUp size={18} stroke={2} />
                 </button>
               </div>
-              <p className="mt-2 px-2 text-[11px] leading-snug text-ink-3">
+              <p className="mt-2 px-4 t-label normal-case tracking-normal text-muted">
                 Asistan vize ve öğrenci izni konusunda tavsiye vermez.
               </p>
             </form>
@@ -156,7 +156,7 @@ export function ChatWidget() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Asistanı kapat" : "Okul asistanını aç"}
-        className="fixed bottom-5 right-4 z-50 flex h-14 min-w-14 items-center justify-center gap-2 rounded-full border border-ink bg-ink px-4 sm:pr-5 text-[15px] font-semibold text-white shadow-lg hover:bg-ink/90 sm:right-6"
+        className="fixed bottom-6 right-4 z-50 flex h-12 min-w-12 items-center justify-center gap-2 rounded-full border border-ink bg-ink px-4 t-body font-extrabold text-paper shadow-float hover:bg-ink/90 sm:right-6 sm:px-6"
         aria-expanded={open}
       >
         {open ? <IconX size={20} stroke={1.75} /> : <IconMessageCircle size={20} stroke={1.75} />}

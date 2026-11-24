@@ -1,10 +1,15 @@
 "use client";
 
 import { PROGRAMS, TIMES, validate, type AppointmentInput } from "@/lib/form";
-import { cn } from "@/lib/utils";
 import { IconCheck } from "@tabler/icons-react";
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
+import { Checkbox } from "./ui/checkbox";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Textarea } from "./ui/textarea";
+import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 
 const STATIC = process.env.NEXT_PUBLIC_STATIC_PREVIEW === "1";
 
@@ -20,19 +25,8 @@ const EMPTY: AppointmentInput = {
   kvkk: false,
 };
 
-const field =
-  "h-12 w-full rounded-2xl border border-ink/15 bg-white px-4 text-[15px] text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-maple";
-
-function Label({ htmlFor, children }: { htmlFor: string; children: ReactNode }) {
-  return (
-    <label htmlFor={htmlFor} className="block text-[14px] font-medium text-ink">
-      {children}
-    </label>
-  );
-}
-
 function Err({ msg }: { msg?: string }) {
-  return msg ? <p className="mt-1.5 text-[13px] text-maple">{msg}</p> : null;
+  return msg ? <p className="mt-2 t-body text-brand">{msg}</p> : null;
 }
 
 export function AppointmentForm() {
@@ -40,8 +34,7 @@ export function AppointmentForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
 
-  const set = <K extends keyof AppointmentInput>(k: K, val: AppointmentInput[K]) =>
-    setV((p) => ({ ...p, [k]: val }));
+  const set = <K extends keyof AppointmentInput>(k: K, val: AppointmentInput[K]) => setV((p) => ({ ...p, [k]: val }));
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -69,15 +62,22 @@ export function AppointmentForm() {
 
   if (state === "done") {
     return (
-      <div className="flex flex-col items-start rounded-3xl border border-line bg-white p-8">
-        <span className="grid size-11 place-items-center rounded-full bg-maple-soft text-maple">
-          <IconCheck size={22} stroke={2} />
+      <div className="flex flex-col items-start rounded-lg border border-line bg-paper p-8">
+        <span className="grid size-12 place-items-center rounded-full bg-brand text-paper">
+          <IconCheck size={24} stroke={2.5} />
         </span>
-        <h3 className="mt-5 text-xl font-semibold">Talebiniz bize ulaştı</h3>
-        <p className="mt-2 text-[15px] leading-relaxed text-ink-2">
+        <h3 className="mt-6 t-lead font-extrabold">Talebiniz bize ulaştı</h3>
+        <p className="mt-2 t-body text-muted">
           Bir iş günü içinde {v.eposta} adresine ya da telefonla dönüp görüşme saatini netleştireceğiz.
         </p>
-        <Button variant="secondary" className="mt-6" onClick={() => { setV(EMPTY); setState("idle"); }}>
+        <Button
+          variant="secondary"
+          className="mt-8"
+          onClick={() => {
+            setV(EMPTY);
+            setState("idle");
+          }}
+        >
           Yeni form
         </Button>
       </div>
@@ -85,106 +85,106 @@ export function AppointmentForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="rounded-3xl border border-line bg-white p-6 sm:p-8">
-      <div className="grid gap-5 sm:grid-cols-2">
+    <form onSubmit={onSubmit} noValidate className="rounded-lg border border-line bg-paper p-6 sm:p-8">
+      <div className="grid gap-6 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <Label htmlFor="adSoyad">Ad soyad</Label>
-          <input id="adSoyad" className={cn(field, "mt-2")} value={v.adSoyad} onChange={(e) => set("adSoyad", e.target.value)} autoComplete="name" />
+          <Input id="adSoyad" className="mt-2" value={v.adSoyad} onChange={(e) => set("adSoyad", e.target.value)} autoComplete="name" aria-invalid={!!errors.adSoyad} />
           <Err msg={errors.adSoyad} />
         </div>
         <div>
           <Label htmlFor="telefon">Telefon</Label>
-          <input id="telefon" type="tel" inputMode="tel" placeholder="05xx xxx xx xx" className={cn(field, "mt-2")} value={v.telefon} onChange={(e) => set("telefon", e.target.value)} autoComplete="tel" />
+          <Input id="telefon" type="tel" inputMode="tel" placeholder="05xx xxx xx xx" className="mt-2" value={v.telefon} onChange={(e) => set("telefon", e.target.value)} autoComplete="tel" aria-invalid={!!errors.telefon} />
           <Err msg={errors.telefon} />
         </div>
         <div>
           <Label htmlFor="eposta">E-posta</Label>
-          <input id="eposta" type="email" className={cn(field, "mt-2")} value={v.eposta} onChange={(e) => set("eposta", e.target.value)} autoComplete="email" />
+          <Input id="eposta" type="email" className="mt-2" value={v.eposta} onChange={(e) => set("eposta", e.target.value)} autoComplete="email" aria-invalid={!!errors.eposta} />
           <Err msg={errors.eposta} />
         </div>
 
-        <fieldset className="sm:col-span-2">
-          <legend className="text-[14px] font-medium text-ink">Kim için soruyorsunuz?</legend>
-          <div className="mt-2 grid grid-cols-2 gap-2">
+        <div className="sm:col-span-2">
+          <p className="t-body font-extrabold text-ink" id="kim-label">Kim için soruyorsunuz?</p>
+          <ToggleGroup
+            type="single"
+            aria-labelledby="kim-label"
+            value={v.kimIcin}
+            onValueChange={(val) => val && set("kimIcin", val)}
+            className="mt-2 grid-cols-2"
+          >
             {["Çocuğum için", "Kendim için"].map((opt) => (
-              <button
-                key={opt}
-                type="button"
-                onClick={() => set("kimIcin", opt)}
-                aria-pressed={v.kimIcin === opt}
-                className={cn(
-                  "h-12 rounded-2xl border text-[15px] font-semibold transition-colors",
-                  v.kimIcin === opt ? "border-maple bg-maple-soft text-maple" : "border-ink/15 bg-white text-ink hover:border-ink/30",
-                )}
-              >
+              <ToggleGroupItem key={opt} value={opt}>
                 {opt}
-              </button>
+              </ToggleGroupItem>
             ))}
-          </div>
-        </fieldset>
+          </ToggleGroup>
+        </div>
 
         <div>
           <Label htmlFor="program">İlgilendiğiniz program</Label>
-          <select id="program" className={cn(field, "mt-2 appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22><path d=%22M1 1l5 5 5-5%22 stroke=%22%2357524c%22 stroke-width=%221.6%22 fill=%22none%22/></svg>')] bg-[position:right_16px_center] bg-no-repeat pr-10")} value={v.program} onChange={(e) => set("program", e.target.value)}>
-            <option value="">Seçin</option>
-            {PROGRAMS.map((p) => (
-              <option key={p}>{p}</option>
-            ))}
-          </select>
+          <Select value={v.program} onValueChange={(val) => set("program", val)}>
+            <SelectTrigger id="program" className="mt-2" aria-invalid={!!errors.program}>
+              <SelectValue placeholder="Seçin" />
+            </SelectTrigger>
+            <SelectContent>
+              {PROGRAMS.map((p) => (
+                <SelectItem key={p} value={p}>
+                  {p}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Err msg={errors.program} />
         </div>
         <div>
           <Label htmlFor="sinif">Öğrencinin sınıfı ya da yaşı</Label>
-          <input id="sinif" placeholder="Örn. 8. sınıf" className={cn(field, "mt-2")} value={v.sinif} onChange={(e) => set("sinif", e.target.value)} />
+          <Input id="sinif" placeholder="Örn. 8. sınıf" className="mt-2" value={v.sinif} onChange={(e) => set("sinif", e.target.value)} />
         </div>
 
-        <fieldset className="sm:col-span-2">
-          <legend className="text-[14px] font-medium text-ink">Size ne zaman uygun?</legend>
-          <div className="mt-2 grid gap-2 sm:grid-cols-3">
+        <div className="sm:col-span-2">
+          <p className="t-body font-extrabold text-ink" id="zaman-label">Size ne zaman uygun?</p>
+          <ToggleGroup
+            type="single"
+            aria-labelledby="zaman-label"
+            value={v.zaman}
+            onValueChange={(val) => set("zaman", val)}
+            className="mt-2 sm:grid-cols-3"
+          >
             {TIMES.map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => set("zaman", t)}
-                aria-pressed={v.zaman === t}
-                className={cn(
-                  "h-12 rounded-2xl border text-[15px] font-semibold transition-colors",
-                  v.zaman === t ? "border-maple bg-maple-soft text-maple" : "border-ink/15 bg-white text-ink hover:border-ink/30",
-                )}
-              >
+              <ToggleGroupItem key={t} value={t}>
                 {t}
-              </button>
+              </ToggleGroupItem>
             ))}
-          </div>
+          </ToggleGroup>
           <Err msg={errors.zaman} />
-        </fieldset>
+        </div>
 
         <div className="sm:col-span-2">
           <Label htmlFor="not">Eklemek istedikleriniz (isteğe bağlı)</Label>
-          <textarea id="not" rows={3} className={cn(field, "mt-2 h-auto py-3 leading-relaxed")} value={v.not} onChange={(e) => set("not", e.target.value)} maxLength={1000} />
+          <Textarea id="not" rows={3} className="mt-2" value={v.not} onChange={(e) => set("not", e.target.value)} maxLength={1000} />
         </div>
 
         <div className="sm:col-span-2">
-          <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-relaxed text-ink-2">
-            <input type="checkbox" checked={v.kvkk} onChange={(e) => set("kvkk", e.target.checked)} className="mt-1 size-4 shrink-0 accent-maple" />
-            <span>
+          <div className="flex items-start gap-4">
+            <Checkbox id="kvkk" checked={v.kvkk} onCheckedChange={(c) => set("kvkk", c === true)} aria-invalid={!!errors.kvkk} />
+            <label htmlFor="kvkk" className="cursor-pointer t-body text-muted">
               Bilgilerimin yalnızca bu görüşmeyi ayarlamak için kullanılmasını kabul ediyorum.{" "}
-              <a href="#kvkk" className="font-medium text-ink underline underline-offset-2">Aydınlatma metni</a>
-            </span>
-          </label>
+              <a href="#kvkk" className="text-ink underline underline-offset-4">
+                Aydınlatma metni
+              </a>
+            </label>
+          </div>
           <Err msg={errors.kvkk} />
         </div>
       </div>
 
-      <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-[13px] text-ink-3">Görüşme ücretsizdir, sizi hiçbir şeye bağlamaz.</p>
+      <div className="mt-8 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <p className="t-body text-muted">Görüşme ücretsizdir, sizi hiçbir şeye bağlamaz.</p>
         <Button type="submit" disabled={state === "sending"}>
           {state === "sending" ? "Gönderiliyor" : "Görüşme talep et"}
         </Button>
       </div>
-      {state === "error" ? (
-        <p className="mt-4 text-[14px] text-maple">Form şu an gönderilemedi. Birazdan tekrar deneyin.</p>
-      ) : null}
+      {state === "error" ? <p className="mt-4 t-body text-brand">Form şu an gönderilemedi. Birazdan tekrar deneyin.</p> : null}
     </form>
   );
 }

@@ -21,10 +21,7 @@ export function Timeline({ data }: { data: TimelineEntry[] }) {
     return () => ro.disconnect();
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 30%", "end 60%"],
-  });
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start 30%", "end 60%"] });
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
 
   return (
@@ -32,25 +29,22 @@ export function Timeline({ data }: { data: TimelineEntry[] }) {
       <div ref={ref} className="relative">
         {data.map((item) => (
           <div key={item.step} className="flex gap-6 pb-12 last:pb-0 md:gap-10">
-            <div className="relative z-10 flex w-10 shrink-0 justify-center md:w-56 md:justify-start">
+            <div className="relative z-10 flex w-10 shrink-0 justify-center md:w-64 md:justify-start">
               <div className="md:sticky md:top-32 md:flex md:items-center md:gap-4">
-                <span className="grid size-10 place-items-center rounded-full border border-line bg-white text-[14px] font-semibold text-maple">
+                <span className="grid size-10 place-items-center rounded-full border border-line bg-paper t-label text-brand">
                   {item.step}
                 </span>
-                <h3 className="hidden text-lg font-semibold md:block">{item.title}</h3>
+                <h3 className="hidden t-lead font-extrabold md:block">{item.title}</h3>
               </div>
             </div>
-            <div className="min-w-0 flex-1 pt-1.5">
-              <h3 className="mb-2 text-lg font-semibold md:hidden">{item.title}</h3>
-              <div className="text-[16px] leading-relaxed text-ink-2">{item.content}</div>
+            <div className="min-w-0 flex-1 pt-2">
+              <h3 className="mb-2 t-lead font-extrabold md:hidden">{item.title}</h3>
+              <div className="max-w-xl t-body text-muted">{item.content}</div>
             </div>
           </div>
         ))}
-        <div
-          style={{ height: height + "px" }}
-          className="absolute left-5 top-0 w-px -translate-x-1/2 overflow-hidden bg-line md:left-5"
-        >
-          <motion.div style={{ height: heightTransform }} className="absolute inset-x-0 top-0 w-px bg-maple" />
+        <div style={{ height: height + "px" }} className="absolute left-5 top-0 w-px -translate-x-1/2 overflow-hidden bg-line">
+          <motion.div style={{ height: heightTransform }} className="absolute inset-x-0 top-0 w-px bg-brand" />
         </div>
       </div>
     </div>
