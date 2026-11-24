@@ -60,7 +60,7 @@ const FLOWS: Record<string, ChatReply> = {
   },
   lise_orta: {
     reply:
-      "9. ve 10. sınıf, Kanada'da diploma almak için uygun dönem. Ottawa'da ortağımız okulu ve homestay ailesini yerinde görebiliyor. Bilgi için: Ottawa Catholic School Board'un 2026–27 yıllık harcı 15.300 CAD, homestay ayrıca ücretlendiriliyor.",
+      "9. ve 10. sınıf, Kanada'da diploma almak için uygun dönem. Diploma koordinatörlerimiz okulu ve homestay ailesini yerinde görebiliyor. Bilgi için: Ottawa Catholic School Board'un 2026–27 yıllık harcı 15.300 CAD, homestay ayrıca ücretlendiriliyor.",
     options: AFTER,
   },
   lise_son: {
@@ -83,7 +83,7 @@ const FLOWS: Record<string, ChatReply> = {
   },
   ing_uzun: {
     reply:
-      "3–6 aylık programlarda Toronto ve Ottawa'da daha fazla seçenek var. Gitmeden önce ortağımızla kısa bir İngilizce seviye görüşmesi yapıyoruz; böylece doğru seviyeden başlıyorsunuz.",
+      "3–6 aylık programlarda Toronto ve Ottawa'da daha fazla seçenek var. Gitmeden önce diploma koordinatörümüzle kısa bir İngilizce seviye görüşmesi yapıyoruz; böylece doğru seviyeden başlıyorsunuz.",
     options: AFTER,
   },
   fransizca: {
@@ -98,7 +98,7 @@ const FLOWS: Record<string, ChatReply> = {
   },
   sehirler: {
     reply:
-      "Ortağımız Ottawa'da yaşıyor. Montreal arabayla yaklaşık 2 saat, Toronto 4–5 saat. Ottawa ve Toronto İngilizce, Quebec City Fransızca, Montreal ikisi birden için uygun.",
+      "Dört şehirle çalışıyoruz: Ottawa, Toronto, Montreal ve Quebec City. Ottawa ve Toronto İngilizce, Quebec City Fransızca, Montreal ikisi birden için uygun.",
     options: MAIN,
   },
   fiyat: {

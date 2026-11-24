@@ -49,7 +49,7 @@ const SLIDES: Slide[] = [
       <HeroSlide
         city="Ottawa"
         title="Kanada'da lise: yanında bir koordinatör olsun"
-        text="Ottawa'daki diploma koordinatörümüz, okul seçiminden ilk okul gününe kadar öğrencinin yanında."
+        text="Kanada'daki diploma koordinatörlerimiz, okul seçiminden ilk okul gününe kadar öğrencinin yanında."
       />
     ),
   },
@@ -107,7 +107,7 @@ const PROGRAMS = [
     title: "Sınavlar ve yüksek lisans",
     description:
       "IELTS ya da Duolingo için hangi seviyeden başlamanız gerektiğini konuşuyor, doğru kaynağa yönlendiriyoruz. Yüksek lisans başvurusunda okul listesi ve yazılarda yanınızdayız.",
-    meta: "Seviye görüşmesi ortağımızla, online",
+    meta: "Seviye görüşmesi koordinatörümüzle, online",
     visual: { big: "IELTS", small: "Sınav · başvuru" },
   },
 ];
@@ -145,7 +145,7 @@ const STEPS = [
   {
     step: "05",
     title: "Varış ve ilk ay",
-    content: "Ottawa'daki ortağımız öğrenciyi havalimanında karşılıyor, ilk haftanın işlerini birlikte hallediyor ve okulun ilk gününde yanında oluyor.",
+    content: "Diploma koordinatörümüz öğrenciyi havalimanında karşılıyor, ilk haftanın işlerini birlikte hallediyor ve okulun ilk gününde yanında oluyor.",
   },
   {
     step: "06",
@@ -155,7 +155,7 @@ const STEPS = [
 ];
 
 const CITIES = [
-  { name: "Ottawa", lang: "EN · FR", note: "Ortağımız burada yaşıyor. Lise ve dil programları için ilk önerimiz." },
+  { name: "Ottawa", lang: "EN · FR", note: "Başkent. Lise ve dil programları için ilk önerimiz." },
   { name: "Montreal", lang: "FR · EN", note: "İki dili aynı anda duyabileceğiniz şehir. Kısa dil programları için uygun." },
   { name: "Quebec City", lang: "FR", note: "Gündelik hayat tamamen Fransızca. Dili hızlı ilerletmek isteyenler için." },
   { name: "Toronto", lang: "EN", note: "En geniş okul seçeneği. Lise ve uzun dil programları için." },
@@ -192,7 +192,7 @@ const FAQ = [
   },
   {
     q: "Ders veriyor musunuz?",
-    a: "Hayır, biz bir danışmanlık hizmetiyiz. İngilizce seviyesini ölçmek için ortağımızla kısa bir online görüşme yapıyoruz ve sınav hazırlığı için doğru kaynağa yönlendiriyoruz.",
+    a: "Hayır, biz bir danışmanlık hizmetiyiz. İngilizce seviyesini ölçmek için koordinatörümüzle kısa bir online görüşme yapıyoruz ve sınav hazırlığı için doğru kaynağa yönlendiriyoruz.",
   },
   {
     q: "Çocuğum kaç yaşında gidebilir?",
@@ -200,7 +200,7 @@ const FAQ = [
   },
   {
     q: "Neden sadece dört şehir?",
-    a: "Çünkü ortağımızın gidip görebildiği, okullarını ve ailelerini tanıdığı şehirlerle çalışıyoruz. Başka bir şehir isterseniz bunu görüşmede açıkça söyleriz.",
+    a: "Çünkü koordinatörlerimizin gidip görebildiği, okullarını ve ailelerini tanıdığı şehirlerle çalışıyoruz. Başka bir şehir isterseniz bunu görüşmede açıkça söyleriz.",
   },
 ];
 
@@ -265,8 +265,8 @@ export default function Home() {
           <Container className="relative grid items-center gap-16 lg:grid-cols-[1.2fr_1fr]">
             <div>
               <SectionHeading invert eyebrow="Farkımız" title="Başvuru bittiğinde işimiz bitmiyor.">
-                Diploma koordinatörümüz Ottawa&apos;da yaşıyor. Öğrenci indiğinde onu karşılayan, okulun ilk
-                gününde yanında olan ve veli aradığında telefonu açan kişi o.
+                Diploma koordinatörlerimiz Kanada&apos;da yaşıyor. Öğrenci indiğinde onu karşılayan, okulun ilk
+                gününde yanında olan ve veli aradığında telefonu açan kişiler onlar.
               </SectionHeading>
               <ul className="mt-10 grid gap-x-8 sm:grid-cols-2">
                 {WITH_YOU.map((t) => (
@@ -278,7 +278,7 @@ export default function Home() {
               </ul>
               <p className="mt-6 flex items-center gap-4 t-body text-paper/70">
                 <IconPlaneArrival size={24} stroke={1.5} />
-                Ottawa dışındaki şehirlerde karşılama ve ziyaretler önceden planlanır.
+                Karşılama ve okul ziyaretleri, öğrencinin şehrine göre önceden planlanır.
               </p>
             </div>
             <ParentNote />
@@ -300,8 +300,8 @@ export default function Home() {
         {/* Şehirler: harita + liste */}
         <section id="sehirler" className="border-y border-line bg-surface py-20 sm:py-32">
           <Container>
-            <SectionHeading eyebrow="Şehirler" title="Ottawa'dan başlayan dört şehir">
-              Sadece ortağımızın gidip görebildiği şehirlerle çalışıyoruz.
+            <SectionHeading eyebrow="Şehirler" title="Kanada'da dört şehir">
+              Sadece koordinatörlerimizin gidip görebildiği şehirlerle çalışıyoruz.
             </SectionHeading>
             <div className="mt-12 grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
               <div className="rounded-lg border border-line bg-paper p-4 sm:p-6">
@@ -436,7 +436,7 @@ export default function Home() {
           <div>
             <Logo light />
             <p className="mt-4 max-w-sm t-body text-paper/70">
-              Kanada&apos;da lise ve dil programları için yurtdışı eğitim danışmanlığı. İstanbul ve Ottawa.
+              Kanada&apos;da lise ve dil programları için yurtdışı eğitim danışmanlığı. İstanbul ve Kanada.
             </p>
           </div>
           <div>
