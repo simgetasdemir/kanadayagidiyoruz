@@ -1,8 +1,10 @@
 import { validate, type AppointmentInput } from "@/lib/form";
+import { GOOGLE_FORM_ID, sendToGoogleForm } from "@/lib/google-form";
 
 /*
   Görüşme formu. FORM_WEBHOOK_URL tanımlıysa başvuruyu oraya JSON olarak iletir
-  (ör. Google Sheets/Apps Script, Make, Zapier, Formspree). Tanımlı değilse sunucu loguna yazar.
+  (ör. Google Sheets/Apps Script, Make, Zapier, Formspree).
+  src/lib/google-form.ts doluysa önce Google Forms'a gönderir. Tanımlı değilse sunucu loguna yazar.
 */
 export async function POST(request: Request) {
   let body: Partial<AppointmentInput>;
@@ -22,7 +24,18 @@ export async function POST(request: Request) {
   };
 
   const hook = process.env.FORM_WEBHOOK_URL;
-  if (hook) {
+  if (GOOGLE_FORM_ID) {
+    let ok = false;
+    try {
+      ok = await sendToGoogleForm(record);
+    } catch (e) {
+      console.error("[randevu] Google Form", e);
+    }
+    if (!ok) {
+      console.log("[randevu] kaydedilemedi", JSON.stringify(record));
+      return Response.json({ ok: false, error: "Kayıt iletilemedi" }, { status: 502 });
+    }
+  } else if (hook) {
     const res = await fetch(hook, {
       method: "POST",
       headers: { "content-type": "application/json" },
