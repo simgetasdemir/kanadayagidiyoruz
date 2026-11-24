@@ -1,6 +1,5 @@
 import { AppointmentForm } from "@/components/appointment-form";
 import { ChatWidget } from "@/components/chat-widget";
-import { CityMap } from "@/components/city-map";
 import { ParentNote } from "@/components/parent-note";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ButtonLink } from "@/components/ui/button";
@@ -17,7 +16,6 @@ const NAV = [
   { name: "Programlar", link: "#programlar" },
   { name: "Yanınızda", link: "#yaninizda" },
   { name: "Süreç", link: "#surec" },
-  { name: "Şehirler", link: "#sehirler" },
   { name: "Paketler", link: "#paketler" },
   { name: "SSS", link: "#sss" },
 ];
@@ -152,13 +150,6 @@ const STEPS = [
     title: "Dönem boyunca",
     content: "Lise öğrencileri için yıl boyu takip: aylık veli notu, okul görüşmelerine katılım ve homestay ziyaretleri.",
   },
-];
-
-const CITIES = [
-  { name: "Ottawa", lang: "EN · FR", note: "Başkent. Lise ve dil programları için ilk önerimiz." },
-  { name: "Montreal", lang: "FR · EN", note: "İki dili aynı anda duyabileceğiniz şehir. Kısa dil programları için uygun." },
-  { name: "Quebec City", lang: "FR", note: "Gündelik hayat tamamen Fransızca. Dili hızlı ilerletmek isteyenler için." },
-  { name: "Toronto", lang: "EN", note: "En geniş okul seçeneği. Lise ve uzun dil programları için." },
 ];
 
 const PACKAGES = [
@@ -297,33 +288,8 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* Şehirler: harita + liste */}
-        <section id="sehirler" className="border-y border-line bg-surface py-20 sm:py-32">
-          <Container>
-            <SectionHeading eyebrow="Şehirler" title="Kanada'da dört şehir">
-              Sadece koordinatörlerimizin gidip görebildiği şehirlerle çalışıyoruz.
-            </SectionHeading>
-            <div className="mt-12 grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
-              <div className="rounded-lg border border-line bg-paper p-4 sm:p-6">
-                <CityMap />
-              </div>
-              <ul className="border-t border-line">
-                {CITIES.map((c) => (
-                  <li key={c.name} className="border-b border-line py-4">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h3 className="t-title">{c.name}</h3>
-                      <span className="t-label text-brand">{c.lang}</span>
-                    </div>
-                    <p className="mt-1 t-body text-muted">{c.note}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Container>
-        </section>
-
         {/* Paketler: karşılaştırma tablosu */}
-        <section id="paketler" className="py-20 sm:py-32">
+        <section id="paketler" className="border-t border-line py-20 sm:py-32">
           <Container>
             <SectionHeading eyebrow="Paketler" title="İhtiyacınız kadar destek">
               Ücretler görüşmeden sonra yazılı olarak verilir. Okul ücretlerine ekleme yapmıyoruz.
