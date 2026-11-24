@@ -76,7 +76,7 @@ export function ChatWidget() {
           >
             <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-6">
               <div>
-                <p className="t-body font-extrabold text-ink">Okul asistanı</p>
+                <p className="t-body font-bold text-ink">Okul asistanı</p>
                 <p className="t-label normal-case tracking-normal text-muted">Okul seçimi ve görüşme</p>
               </div>
               <button
@@ -108,7 +108,7 @@ export function ChatWidget() {
                       key={o.action}
                       type="button"
                       onClick={() => send({ action: o.action }, o.label)}
-                      className="h-10 rounded-full border border-line bg-paper px-4 t-body font-extrabold text-ink hover:border-brand hover:text-brand"
+                      className="h-10 rounded-full border border-line bg-paper px-4 t-body font-bold text-ink hover:border-brand hover:text-brand"
                     >
                       {o.label}
                     </button>
@@ -156,7 +156,7 @@ export function ChatWidget() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Asistanı kapat" : "Okul asistanını aç"}
-        className="fixed bottom-6 right-4 z-50 flex h-12 min-w-12 items-center justify-center gap-2 rounded-full border border-ink bg-ink px-4 t-body font-extrabold text-paper shadow-float hover:bg-ink/90 sm:right-6 sm:px-6"
+        className="fixed bottom-6 right-4 z-50 flex h-12 min-w-12 items-center justify-center gap-2 rounded-full border border-ink bg-ink px-4 t-body font-bold text-paper shadow-float hover:bg-ink/90 sm:right-6 sm:px-6"
         aria-expanded={open}
       >
         {open ? <IconX size={20} stroke={1.75} /> : <IconMessageCircle size={20} stroke={1.75} />}

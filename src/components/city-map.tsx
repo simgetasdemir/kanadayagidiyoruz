@@ -92,7 +92,7 @@ export function CityMap() {
               y={pt.y + c.dy}
               textAnchor={c.anchor}
               className="fill-ink font-body"
-              style={{ fontSize: 16, fontWeight: 800 }}
+              style={{ fontSize: 16, fontWeight: 700 }}
             >
               {c.name}
             </text>

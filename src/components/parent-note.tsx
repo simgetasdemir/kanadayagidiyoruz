@@ -14,7 +14,7 @@ export function ParentNote() {
             <div className="mt-4 flex items-center gap-4">
               <span className="grid size-10 place-items-center rounded-full bg-accent t-label text-paper">OT</span>
               <div>
-                <p className="t-body font-extrabold text-ink">Ottawa&apos;daki öğretmeniniz</p>
+                <p className="t-body font-bold text-ink">Ottawa&apos;daki öğretmeniniz</p>
                 <p className="t-label normal-case tracking-normal text-muted">Ayda bir</p>
               </div>
             </div>

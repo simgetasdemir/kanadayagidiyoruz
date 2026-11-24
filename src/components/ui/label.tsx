@@ -9,7 +9,7 @@ export function Label({ className, ...props }: ComponentProps<typeof LabelPrimit
   return (
     <LabelPrimitive.Root
       data-slot="label"
-      className={cn("block t-body font-extrabold text-ink", className)}
+      className={cn("block t-body font-bold text-ink", className)}
       {...props}
     />
   );

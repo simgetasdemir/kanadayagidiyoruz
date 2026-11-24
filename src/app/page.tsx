@@ -1,17 +1,14 @@
 import { AppointmentForm } from "@/components/appointment-form";
 import { ChatWidget } from "@/components/chat-widget";
 import { CityMap } from "@/components/city-map";
-import { HeroVisual } from "@/components/hero-visual";
 import { ParentNote } from "@/components/parent-note";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Badge } from "@/components/ui/badge";
-import { BackgroundGrid } from "@/components/ui/background-grid";
 import { ButtonLink } from "@/components/ui/button";
 import { HoverEffect } from "@/components/ui/hover-effect";
+import { ImagesSlider, type Slide } from "@/components/ui/images-slider";
 import { Logo, ResizableNavbar } from "@/components/ui/resizable-navbar";
 import { Container, SectionHeading } from "@/components/ui/section";
 import { Separator } from "@/components/ui/separator";
-import { Spotlight } from "@/components/ui/spotlight";
 import { Timeline } from "@/components/ui/timeline";
 import { cn } from "@/lib/utils";
 import { IconCheck, IconMinus, IconPlaneArrival } from "@tabler/icons-react";
@@ -25,6 +22,71 @@ const NAV = [
   { name: "SSS", link: "#sss" },
 ];
 const CTA = { name: "Ücretsiz görüşme", link: "#gorusme" };
+
+function HeroSlide({ city, title, text }: { city: string; title: string; text: string }) {
+  return (
+    <Container className="flex h-full flex-col justify-center pt-24">
+      <div className="max-w-xl">
+        <p className="t-label text-paper/80">{city}</p>
+        <h1 className="mt-4 t-display text-paper">{title}</h1>
+        <p className="mt-4 t-lead text-paper/90">{text}</p>
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+          <ButtonLink href="#gorusme">15 dakikalık ücretsiz görüşme</ButtonLink>
+          <ButtonLink href="#paketler" variant="inverse">
+            Paketleri incele
+          </ButtonLink>
+        </div>
+      </div>
+    </Container>
+  );
+}
+
+const SLIDES: Slide[] = [
+  {
+    image: "hero/ottawa.jpg",
+    alt: "Ottawa'da Parlamento binasına bakan bir öğrenci",
+    content: (
+      <HeroSlide
+        city="Ottawa"
+        title="Kanada'da lise: yanında bir öğretmen olsun"
+        text="Ortağımız Ottawa'da yaşayan bir İngilizce öğretmeni. Okul seçiminden ilk okul gününe kadar öğrencinin yanında."
+      />
+    ),
+  },
+  {
+    image: "hero/montreal.jpg",
+    alt: "Montreal'de Notre-Dame Bazilikası önünde bir öğrenci",
+    content: (
+      <HeroSlide
+        city="Montreal"
+        title="Montreal'de İngilizce ve Fransızca"
+        text="4 ile 24 hafta arası dil programları. İki dili aynı şehirde, aynı okulda seçebilirsiniz."
+      />
+    ),
+  },
+  {
+    image: "hero/quebec.jpg",
+    alt: "Quebec City'de Château Frontenac'a bakan bir öğrenci",
+    content: (
+      <HeroSlide
+        city="Quebec City"
+        title="Quebec City'de Fransızcanızı ilerletin"
+        text="Gündelik hayatı tamamen Fransızca olan şehirde kısa dil programları."
+      />
+    ),
+  },
+  {
+    image: "hero/toronto.jpg",
+    alt: "Toronto'da CN Kulesi'ne bakan bir öğrenci",
+    content: (
+      <HeroSlide
+        city="Toronto"
+        title="Toronto'da lise ve uzun dil programları"
+        text="En geniş okul seçeneği. Başvurudan karşılamaya kadar her adımı biz takip ediyoruz."
+      />
+    ),
+  },
+];
 
 const PROGRAMS = [
   {
@@ -162,46 +224,25 @@ export default function Home() {
       <ResizableNavbar items={NAV} cta={CTA} />
 
       <main id="top" className="flex-1">
-        {/* Giriş: sola yaslı dev başlık, altta metin + görsel */}
-        <section className="relative overflow-hidden pb-20 pt-32 sm:pb-32 sm:pt-40">
-          <BackgroundGrid />
-          <Spotlight />
-          <Container className="relative">
-            <Badge>İstanbul ↔ Ottawa</Badge>
-            <h1 className="mt-8 t-display">
-              <span className="block font-extralight">Kanada&apos;da</span>
-              <span className="block">
-                yanında bir <span className="text-brand">öğretmen.</span>
-              </span>
-            </h1>
-            <div className="mt-16 grid items-start gap-16 lg:grid-cols-[1fr_480px]">
-              <div className="max-w-xl">
-                <p className="t-lead text-muted">
-                  Lise, İngilizce ve Fransızca dil programları için okul seçiminden ilk haftaya kadar yanınızdayız.
-                  İstanbul&apos;da biz, Ottawa&apos;da İngilizce öğretmeni ortağımız.
-                </p>
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                  <ButtonLink href="#gorusme">15 dakikalık ücretsiz görüşme</ButtonLink>
-                  <ButtonLink href="#paketler" variant="secondary">
-                    Paketleri incele
-                  </ButtonLink>
-                </div>
-                <dl className="mt-16 grid grid-cols-1 border-t border-line sm:grid-cols-3">
-                  {[
-                    ["Okul ücreti", "Resmi fiyatıyla"],
-                    ["Varışta", "Karşılama"],
-                    ["Vize", "Lisanslı danışman"],
-                  ].map(([k, v]) => (
-                    <div key={k} className="border-b border-line py-4 sm:border-b-0 sm:border-r sm:px-4 sm:first:pl-0 sm:last:border-r-0">
-                      <dt className="t-label text-muted">{k}</dt>
-                      <dd className="mt-1 t-body font-extrabold text-ink">{v}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-              <HeroVisual />
-            </div>
-          </Container>
+        {/* Giriş: fotoğraflı kaydırmalı alan (Academix referansı) */}
+        <section aria-label="Giriş">
+          <ImagesSlider className="h-[640px] sm:h-[680px]" slides={SLIDES} />
+          <div className="border-b border-line bg-paper">
+            <Container>
+              <dl className="grid grid-cols-1 sm:grid-cols-3">
+                {[
+                  ["Okul ücreti", "Okulun resmi fiyatıyla"],
+                  ["Varışta", "Havalimanında karşılama"],
+                  ["Vize", "Lisanslı danışmana yönlendirme"],
+                ].map(([k, v]) => (
+                  <div key={k} className="border-b border-line py-6 sm:border-b-0 sm:border-r sm:px-8 sm:first:pl-0 sm:last:border-r-0">
+                    <dt className="t-label text-brand">{k}</dt>
+                    <dd className="mt-1 t-title text-ink">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Container>
+          </div>
         </section>
 
         {/* Programlar: alt alta satırlar */}
@@ -270,7 +311,7 @@ export default function Home() {
                 {CITIES.map((c) => (
                   <li key={c.name} className="border-b border-line py-4">
                     <div className="flex items-baseline justify-between gap-4">
-                      <h3 className="t-lead font-extrabold">{c.name}</h3>
+                      <h3 className="t-title">{c.name}</h3>
                       <span className="t-label text-brand">{c.lang}</span>
                     </div>
                     <p className="mt-1 t-body text-muted">{c.note}</p>
@@ -297,7 +338,7 @@ export default function Home() {
                     {PACKAGES.map((p) => (
                       <th key={p.name} className={cn("px-6 pb-6 pt-6 align-bottom", p.featured && "rounded-t-lg bg-brand-tint")}>
                         {p.featured ? <p className="mb-2 t-label text-brand">Önerimiz</p> : null}
-                        <p className="t-lead font-extrabold text-ink">{p.name}</p>
+                        <p className="t-title text-ink">{p.name}</p>
                         <p className="mt-1 t-body font-normal text-muted">{p.who}</p>
                       </th>
                     ))}
@@ -335,7 +376,7 @@ export default function Home() {
               {PACKAGES.map((p, i) => (
                 <div key={p.name} className="border-t-2 border-ink pt-6">
                   {p.featured ? <p className="mb-2 t-label text-brand">Önerimiz</p> : null}
-                  <h3 className="t-lead font-extrabold">{p.name}</h3>
+                  <h3 className="t-title">{p.name}</h3>
                   <p className="t-body text-muted">{p.who}</p>
                   <ul className="mt-4 grid gap-2">
                     {FEATURES.filter(([, has]) => has[i]).map(([f]) => (
@@ -393,9 +434,7 @@ export default function Home() {
       <footer className="bg-ink text-paper">
         <Container className="grid gap-10 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <div className="[&_span]:text-paper [&_circle:last-child]:stroke-paper">
-              <Logo />
-            </div>
+            <Logo light />
             <p className="mt-4 max-w-sm t-body text-paper/70">
               Kanada&apos;da lise ve dil programları için yurtdışı eğitim danışmanlığı. İstanbul ve Ottawa.
             </p>

@@ -66,7 +66,7 @@ export function AppointmentForm() {
         <span className="grid size-12 place-items-center rounded-full bg-brand text-paper">
           <IconCheck size={24} stroke={2.5} />
         </span>
-        <h3 className="mt-6 t-lead font-extrabold">Talebiniz bize ulaştı</h3>
+        <h3 className="mt-6 t-title">Talebiniz bize ulaştı</h3>
         <p className="mt-2 t-body text-muted">
           Bir iş günü içinde {v.eposta} adresine ya da telefonla dönüp görüşme saatini netleştireceğiz.
         </p>
@@ -104,7 +104,7 @@ export function AppointmentForm() {
         </div>
 
         <div className="sm:col-span-2">
-          <p className="t-body font-extrabold text-ink" id="kim-label">Kim için soruyorsunuz?</p>
+          <p className="t-body font-bold text-ink" id="kim-label">Kim için soruyorsunuz?</p>
           <ToggleGroup
             type="single"
             aria-labelledby="kim-label"
@@ -142,7 +142,7 @@ export function AppointmentForm() {
         </div>
 
         <div className="sm:col-span-2">
-          <p className="t-body font-extrabold text-ink" id="zaman-label">Size ne zaman uygun?</p>
+          <p className="t-body font-bold text-ink" id="zaman-label">Size ne zaman uygun?</p>
           <ToggleGroup
             type="single"
             aria-labelledby="zaman-label"

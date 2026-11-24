@@ -34,11 +34,11 @@ export function Timeline({ data }: { data: TimelineEntry[] }) {
                 <span className="grid size-10 place-items-center rounded-full border border-line bg-paper t-label text-brand">
                   {item.step}
                 </span>
-                <h3 className="hidden t-lead font-extrabold md:block">{item.title}</h3>
+                <h3 className="hidden t-title md:block">{item.title}</h3>
               </div>
             </div>
             <div className="min-w-0 flex-1 pt-2">
-              <h3 className="mb-2 t-lead font-extrabold md:hidden">{item.title}</h3>
+              <h3 className="mb-2 t-title md:hidden">{item.title}</h3>
               <div className="max-w-xl t-body text-muted">{item.content}</div>
             </div>
           </div>

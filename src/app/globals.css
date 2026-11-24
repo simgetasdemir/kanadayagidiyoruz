@@ -20,12 +20,13 @@
 }
 
 @theme inline {
-  --font-display: var(--font-bricolage), sans-serif;
-  --font-body: var(--font-hanken), sans-serif;
-  --font-mono: var(--font-jetbrains), monospace;
+  /* Tek aile: başlık, metin, etiket hepsi aynı font */
+  --font-display: var(--font-site), sans-serif;
+  --font-body: var(--font-site), sans-serif;
+  --font-mono: var(--font-site), sans-serif;
   /* Tailwind varsayılanları (system-ui içerir) kullanılmasın */
-  --font-sans: var(--font-hanken), sans-serif;
-  --font-serif: var(--font-hanken), sans-serif;
+  --font-sans: var(--font-site), sans-serif;
+  --font-serif: var(--font-site), sans-serif;
 
   --color-brand: var(--brand);
   --color-brand-ink: var(--brand-ink);
@@ -44,39 +45,48 @@
   --shadow-float: var(--shadow-float);
 }
 
-/* Yazı ölçeği: 14 · 16 · 18 · 48 · 144 (3x sıçrama), kalınlık 200 / 400 / 800 */
+/* Yazı ölçeği (Academix referansı, 2026-11-24): 14 · 16 · 18 · 20 · 36 · 48, kalınlık 400 / 700 */
 @utility t-display {
-  font-family: var(--font-bricolage), sans-serif;
-  font-size: clamp(64px, 11vw, 144px);
-  line-height: 0.944;
-  letter-spacing: -0.04em;
-  font-weight: 800;
-}
-@utility t-heading {
-  font-family: var(--font-bricolage), sans-serif;
-  font-size: 40px;
-  line-height: 48px;
-  letter-spacing: -0.025em;
-  font-weight: 800;
+  font-family: var(--font-site), sans-serif;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   @media (width >= 40rem) {
     font-size: 48px;
     line-height: 56px;
   }
 }
+@utility t-heading {
+  font-family: var(--font-site), sans-serif;
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  @media (width >= 40rem) {
+    font-size: 36px;
+    line-height: 44px;
+  }
+}
+@utility t-title {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+}
 @utility t-lead {
   font-size: 18px;
-  line-height: 32px;
+  line-height: 28px;
 }
 @utility t-body {
   font-size: 16px;
   line-height: 24px;
 }
 @utility t-label {
-  font-family: var(--font-jetbrains), monospace;
+  font-family: var(--font-site), sans-serif;
   font-size: 14px;
-  line-height: 24px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
+  line-height: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 

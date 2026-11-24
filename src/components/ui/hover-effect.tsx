@@ -46,20 +46,20 @@ export function HoverEffect({ items, className }: { items: HoverItem[]; classNam
           >
             {item.visual ? (
               <div>
-                <p className="font-display text-[48px] font-extralight leading-[56px] tracking-[-0.03em] text-ink">
+                <p className="text-[36px] font-bold leading-[44px] text-brand">
                   {item.visual.big}
                 </p>
                 <p className="mt-2 t-label text-muted">{item.visual.small}</p>
               </div>
             ) : null}
             <div className="max-w-xl">
-              <h3 className="flex items-center gap-2 t-lead font-extrabold">
+              <h3 className="flex items-center gap-2 t-title">
                 {item.icon ? <span className="text-brand">{item.icon}</span> : null}
                 {item.title}
               </h3>
               <p className="mt-2 t-body text-muted">{item.description}</p>
               {item.meta ? (
-                <p className="mt-4 flex items-center gap-2 t-body font-extrabold text-ink">
+                <p className="mt-4 flex items-center gap-2 t-body font-bold text-ink">
                   {item.meta}
                   <IconArrowRight
                     size={20}

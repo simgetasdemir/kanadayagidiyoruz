@@ -14,7 +14,7 @@ export function ToggleGroupItem({ className, ...props }: ComponentProps<typeof T
     <ToggleGroupPrimitive.Item
       data-slot="toggle-group-item"
       className={cn(
-        "h-12 rounded-full border border-line bg-paper px-4 t-body font-extrabold text-ink outline-none transition-colors hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand data-[state=on]:border-brand data-[state=on]:bg-brand-tint data-[state=on]:text-brand",
+        "h-12 rounded-full border border-line bg-paper px-4 t-body font-bold text-ink outline-none transition-colors hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand data-[state=on]:border-brand data-[state=on]:bg-brand-tint data-[state=on]:text-brand",
         className,
       )}
       {...props}

@@ -18,7 +18,7 @@ export function AccordionTrigger({ className, children, ...props }: ComponentPro
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          "group flex flex-1 items-center justify-between gap-6 border border-transparent py-6 text-left t-lead font-extrabold text-ink outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
+          "group flex flex-1 items-center justify-between gap-6 border border-transparent py-6 text-left t-title text-ink outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
           className,
         )}
         {...props}

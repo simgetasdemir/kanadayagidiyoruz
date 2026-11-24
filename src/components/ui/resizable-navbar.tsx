@@ -12,14 +12,14 @@ import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "./she
 
 export type NavItem = { name: string; link: string };
 
-export function Logo({ className }: { className?: string }) {
+export function Logo({ className, light = false }: { className?: string; light?: boolean }) {
   return (
     <a href="#top" className={cn("flex h-10 shrink-0 items-center gap-2", className)} aria-label="kanadayagidiyoruz ana sayfa">
       <svg viewBox="0 0 40 32" className="h-8 w-10" aria-hidden="true">
         <circle cx="14" cy="16" r="12" fill="var(--brand)" />
-        <circle cx="26" cy="16" r="12" fill="none" stroke="var(--ink)" strokeWidth="2" />
+        <circle cx="26" cy="16" r="12" fill="none" stroke={light ? "var(--paper)" : "var(--ink)"} strokeWidth="2" />
       </svg>
-      <span className="font-display text-[18px] font-extrabold leading-6 tracking-[-0.02em] text-ink">kanadayagidiyoruz</span>
+      <span className={cn("text-[20px] font-bold leading-7 tracking-[-0.01em]", light ? "text-paper" : "text-ink")}>kanadayagidiyoruz</span>
     </a>
   );
 }
@@ -39,14 +39,14 @@ export function ResizableNavbar({ items, cta }: { items: NavItem[]; cta: NavItem
             : "w-full max-w-6xl bg-transparent px-6 shadow-[0_0_0_1px_transparent] sm:px-8",
         )}
       >
-        <Logo />
+        <Logo light={!scrolled} />
 
         <nav className="hidden h-10 items-center lg:flex" aria-label="Ana menü">
           {items.map((item) => (
             <a
               key={item.link}
               href={item.link}
-              className="flex h-10 items-center rounded-full px-4 t-body text-ink transition-colors hover:bg-surface"
+              className={cn("flex h-10 items-center rounded-full px-4 t-body transition-colors", scrolled ? "text-ink hover:bg-surface" : "text-paper hover:bg-paper/15")}
             >
               {item.name}
             </a>
@@ -59,7 +59,7 @@ export function ResizableNavbar({ items, cta }: { items: NavItem[]; cta: NavItem
           </a>
           <Sheet>
             <SheetTrigger
-              className="grid size-10 place-items-center rounded-full border border-line bg-paper text-ink outline-none focus-visible:outline-2 focus-visible:outline-brand lg:hidden"
+              className={cn("grid size-10 place-items-center rounded-full border outline-none focus-visible:outline-2 focus-visible:outline-brand lg:hidden", scrolled ? "border-line bg-paper text-ink" : "border-paper/60 bg-transparent text-paper")}
               aria-label="Menüyü aç"
             >
               <IconMenu2 size={20} stroke={1.75} />
@@ -70,7 +70,7 @@ export function ResizableNavbar({ items, cta }: { items: NavItem[]; cta: NavItem
               <nav className="mt-10 flex flex-col border-t border-line" aria-label="Mobil menü">
                 {items.map((item) => (
                   <SheetClose asChild key={item.link}>
-                    <a href={item.link} className="flex h-14 items-center border-b border-line t-lead font-extrabold text-ink">
+                    <a href={item.link} className="flex h-14 items-center border-b border-line t-title text-ink">
                       {item.name}
                     </a>
                   </SheetClose>

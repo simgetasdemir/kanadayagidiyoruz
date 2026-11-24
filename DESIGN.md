@@ -30,22 +30,17 @@ they are committed.
 
 ## 1. Fonts
 
-Exactly three families, loaded once in `src/app/layout.tsx` with `next/font/google`,
-`subsets: ["latin", "latin-ext"]` (Turkish needs latin-ext: ç ğ ı İ ö ş ü).
+**Changed 2026-11-24 at the owner's request ("yazı tipini ve boyutları Academix'teki gibi yap").**
 
-| Role | Family | Weights used | CSS variable | Tailwind class |
-|---|---|---|---|---|
-| Display (h1, h2, big numbers) | **Bricolage Grotesque** (variable, wght 200–800, opsz 12–96) | 200, 800 | `--font-display` | `font-display` |
-| Body (paragraphs, UI, buttons, forms) | **Hanken Grotesk** (variable, wght 100–900) | 400, 800 | `--font-body` | `font-body` (default on `body`) |
-| Mono (labels, eyebrows, codes like IST → YOW, prices, dates) | **JetBrains Mono** (variable, wght 100–800) | 400 | `--font-mono` | `font-mono` |
-
-Fallback stacks are generic keywords only: `sans-serif` for display and body, `monospace` for mono.
-Set `adjustFontFallback: false` so next/font does not inject a metric-matched Arial face.
+One family for everything: **Noto Sans** (`next/font/google`, `subsets: ["latin", "latin-ext"]`,
+weights 400 and 700), loaded once in `src/app/layout.tsx` as `--font-site`. The display, body and
+mono tokens (`--font-display`, `--font-body`, `--font-mono`, `--font-sans`) all point to it, so
+headings, text, labels, buttons and form fields are the same font. Fallback is the generic
+`sans-serif` keyword; `adjustFontFallback: false`.
 
 **NEVER use:** Inter, Roboto, Open Sans, Arial, system-ui (also not `ui-sans-serif`,
-`-apple-system`, Helvetica, Geist as a "safe default"). No font may be declared anywhere except
-`layout.tsx`, and no component sets `font-family` directly. `button, input, select, textarea`
-inherit the font (`font: inherit` in `globals.css`).
+`-apple-system`, Helvetica). No component sets `font-family` directly. `button, input, select,
+textarea` inherit the font (`font: inherit` in `globals.css`).
 
 ---
 
@@ -78,7 +73,7 @@ multi-color gradients; neon glows; glassmorphism blur panels other than the scro
 - **8px rhythm.** Tailwind spacing values must be even: `2 4 6 8 10 12 16 20 24 32 40` (8 → 160px).
   `1` (4px) is allowed only for icon-to-text gaps and hairline offsets. No `.5` values, no odd values
   (`p-3`, `p-5`, `p-7`, `gap-5`, `mt-9` …).
-- Line heights land on multiples of 8: body 16/24, lead 18/32, heading 48/56, display 144/136.
+- Line heights follow section 4.
 - Section padding: `py-20` mobile, `py-32` desktop. Container: `max-w-6xl px-6 sm:px-8`
   (`Container` from `@/components/ui/section`). Header uses the same container so the logo and
   section headings share one left edge.
@@ -91,17 +86,20 @@ multi-color gradients; neon glows; glassmorphism blur panels other than the scro
 
 ## 4. Type scale
 
-Hierarchy comes from **weight extremes (200 vs 800)** and **3x size jumps**, not from many in-between sizes.
+**Changed 2026-11-24 at the owner's request (Academix reference):** moderate sizes, weights 400 and 700.
+Utilities live in `globals.css` (`@utility`).
 
-| Step | Size / line | Family | Weight | Use |
+| Utility | Mobile | Desktop | Weight | Use |
 |---|---|---|---|---|
-| Display | 144/136 desktop, `clamp(64px, 12vw, 144px)` | display | 800, with a 200 word for contrast | h1 only, one per page |
-| Heading | 48/56 (mobile 40/48) | display | 800 (or 200 for a quiet heading) | h2 |
-| Body | 16/24, lead 18/32 | body | 400; 800 for emphasis and card titles | Paragraphs, h3, buttons |
-| Label | 14/24, uppercase, `tracking-[0.08em]` | mono | 400 | Eyebrows, metadata, prices, dates |
+| `t-display` | 32/40 | 48/56 | 700 | h1 (hero slide titles) |
+| `t-heading` | 28/36 | 36/44 | 700 | h2 |
+| `t-title` | 20/28 | 20/28 | 700 | h3, card and row titles, big facts |
+| `t-lead` | 18/28 | 18/28 | 400 | intro paragraphs |
+| `t-body` | 16/24 | 16/24 | 400 (700 for emphasis) | text, buttons, forms |
+| `t-label` | 14/20 uppercase | 14/20 | 700 | eyebrows, metadata |
 
-Allowed sizes: 14, 16, 18, 48, 144 (and the mobile clamps). Nothing between 18 and 48, nothing
-between 48 and 144. Weights 500/600/700 are not used. Buttons: body 16, weight 800.
+Only these sizes (plus 36px for the big numbers in the program rows). Weights 400 and 700 only.
+Buttons: 16px, weight 700.
 
 ---
 
@@ -116,8 +114,8 @@ between 48 and 144. Weights 500/600/700 are not used. Buttons: body 16, weight 8
 | `@/components/ui/resizable-navbar` | `ResizableNavbar`, `NavItem` | Aceternity Resizable Navbar. Only header |
 | `@/components/ui/timeline` | `Timeline`, `TimelineEntry` | Aceternity Timeline. Process section |
 | `@/components/ui/hover-effect` | `HoverEffect`, `HoverItem` | Aceternity Card Hover Effect. Must not be laid out as 3 cards in a row (see 6) |
-| `@/components/ui/spotlight` | `Spotlight` | Hero background only |
-| `@/components/ui/background-grid` | `BackgroundGrid` | Hero background only |
+| `@/components/ui/images-slider` | `ImagesSlider`, `Slide` | Aceternity Images Slider. Hero only; photos in `public/hero/` |
+| `@/components/ui/spotlight`, `@/components/ui/background-grid` | `Spotlight`, `BackgroundGrid` | Currently unused; keep for light sections |
 | `@/components/appointment-form` | `AppointmentForm` | 15-minute call form; posts to `/api/randevu` |
 | `@/components/chat-widget` | `ChatWidget` | School assistant; posts to `/api/chat` |
 | `@/lib/utils` | `cn` | clsx + tailwind-merge. Use for every conditional class |
@@ -152,8 +150,8 @@ restyled with the tokens above (fonts, 1px borders, 48px height, even spacing).
 
 - Three rounded cards in a row (any `grid-cols-3` of same-shaped rounded boxes). Use a list, a
   table, a 2 + 1 asymmetric split, a horizontal scroller or one large feature with a side list.
-- Centered-everything heroes. The hero is left-aligned text with a visual on the right
-  (stacked on mobile).
+- Centered-everything heroes. The hero is a full-width photo slider (`ImagesSlider`) with an
+  `ink` overlay and left-aligned text, Academix-style (owner's request 2026-11-24).
 - 0.1-opacity drop shadows on everything. Default is **no shadow**: separate with 1px `--line` or a
   surface change. One token, `--shadow-float`, only for layers that float over content:
   scrolled header, chat panel, hero visual cards.
@@ -171,7 +169,7 @@ restyled with the tokens above (fonts, 1px borders, 48px height, even spacing).
 ## 7. Before every UI commit
 
 1. Fonts: computed `font-family` on all text is one of the three families.
-2. Buttons: every action button (`Button`, `ButtonLink`, toggle items, chat chips) has a 1px border, weight 800, height 48 or 40. Form fields and accordion rows are not action buttons.
+2. Buttons: every action button (`Button`, `ButtonLink`, toggle items, chat chips) has a 1px border, weight 700, height 48 or 40. Form fields and accordion rows are not action buttons.
 3. Header: logo left edge equals the section heading left edge at 390, 768, 1366 and 1600px.
 4. No horizontal scroll at 390px.
 5. `npm run lint` and `npm run build` pass.
